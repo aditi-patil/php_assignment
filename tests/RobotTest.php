@@ -1,19 +1,34 @@
 <?php
 
 use PHPUnit\Framework\TestCase;
-use Mockery\Adapter\Phpunit\MockeryTestCase;
 
-class RobotTest extends MockeryTestCase {
+class RobotTest extends TestCase {
 
     public function testCharge(){
 
-        $r = new Robot(10);
+        $mock = Mockery::mock(Robot::class);
+
+        $mock->shouldReceive('charge')
+                ->once()
+                ->andReturn(100);
+
         $reflector = new ReflectionClass(Robot::class);
         $property = $reflector->getProperty('batteryStatus');
-        $r->charge();
+        $mock->charge();
         $property->setAccessible(true);
-        $value = $property->getValue($r);
+        $value = $property->getValue($mock);
         $this->assertEquals(100, $value);
     }
 
+    public function testCleanWithMockery(){
+
+        $mock = Mockery::mock(Robot::class);
+
+        $mock->shouldReceive('clean')
+                ->once()
+                ->withSomeOfArgs(31, 1, 2)
+                ->andReturn(31);
+
+        $this->assertEquals(31, $mock->clean(31, 1, 2));
+    }
 }

@@ -1,14 +1,15 @@
 <?php
 require "vendor/autoload.php";
 
-$val = getopt('clean', ["floor:", "area:"]);
+$robot = new Robot(100);
+$val = getopt(null, ["floor:", "area:"]);
 print_r($val);
 if (isset($val['floor']) && isset($val['area'])){
     if ($val['floor'] == 'carpet') {
-        $carpet = new Carpet($val['area']);
+        $carpet = new Carpet($val['area'], $robot);
         $carpet->calculateCleanUpArea();
     } elseif($val['floor'] == 'hard') {
-        $hard = new Hard($val[area]);
+        $hard = new Hard($val['area'], $robot);
         $hard->calculateCleanUpArea();
     }
 } elseif(isset($val['area']) == null && isset($val['floor']) == null){
