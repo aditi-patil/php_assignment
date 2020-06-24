@@ -4,22 +4,20 @@ use PHPUnit\Framework\TestCase;
 
 class CarpetTest extends TestCase {
 
+    public function setUp(): void {
+        $this->robot = new Robot('clean', new Battery());
+        $this->setOutputCallback(function() {});
+    }
+
     public function testArea() {
-        $c = new Carpet(41, new Robot(20));
+        $c = new Carpet(41, $this->robot);
         $this->assertEquals(41, $c->area);
     }
 
-    public function testCalculateCleanUpAreaWithMockery(){
-        $mock = Mockery::mock(Robot::class);
-
-        $mock->shouldReceive('clean')
-                ->once()
-                ->withSomeOfArgs(31, 1, 2)
-                ->andReturn(31);
-
-        $c = new Carpet(31, $mock);
+    public function testCalculateCleanUpArea(){
+        $c = new Carpet(2, $this->robot);
         $c->calculateCleanUpArea($c->area, 1, 2);
-        $this->assertEquals(31, $c->area);
+        $this->assertEquals(2, $c->area);
     }
 
 
