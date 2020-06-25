@@ -11,13 +11,13 @@ class CarpetTest extends TestCase {
 
     public function testArea() {
         $c = new Carpet(41, $this->robot);
-        $this->assertEquals(41, $c->area);
+        $this->assertEquals(41, $c->getArea());
     }
 
     public function testCalculateCleanUpArea(){
         $c = new Carpet(2, $this->robot);
-        $c->calculateCleanUpArea($c->area, 1, 2);
-        $this->assertEquals(2, $c->area);
+        $c->calculateCleanUpArea($c->getArea(), 1, 2);
+        $this->assertEquals(2, $c->getArea());
     }
 
 

@@ -17,7 +17,7 @@ class RobotTest extends TestCase {
              ->andReturn(100);
 
         $reflector = new ReflectionClass(Robot::class);
-        $property = $reflector->getProperty('batteryStatus');
+        $property = $reflector->getProperty('battery');
         $mock->charge();
         $property->setAccessible(true);
         $value = $property->getValue($mock);
@@ -36,15 +36,4 @@ class RobotTest extends TestCase {
         $this->assertEquals(31, $mock->clean(31, 1, 2));
     }
 
-    public function testCheckBatteryStatus() {
-        $this->robot->capacity = 60;        
-        $reflector = new ReflectionClass($this->robot);
-        $property = $reflector->getProperty('batteryStatus');
-        $this->robot->checkBatteryStatus();
-        $property->setAccessible(true);
-        $value = $property->getValue($this->robot);
-
-        $this->assertEquals(98.33, $value);
-
-    }
 }

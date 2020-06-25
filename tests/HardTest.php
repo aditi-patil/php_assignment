@@ -10,15 +10,15 @@ class HardTest extends TestCase {
     }
 
     public function testArea() {
-        $c = new Hard(41, $this->robot);
-        $this->assertEquals(41, $c->area);
+        $c = new Hard(4, $this->robot);
+        $this->assertEquals(4, $c->getArea());
     }
 
 
     public function testCalculateCleanUpArea(){
         $c = new Hard(2, $this->robot);
-        $c->calculateCleanUpArea($c->area, 1, 1);
-        $this->assertEquals(2, $c->area);
+        $c->calculateCleanUpArea($c->getArea(), 1, 1);
+        $this->assertEquals(2, $c->getArea());
     }
 
 }
