@@ -36,4 +36,14 @@ class RobotTest extends TestCase {
         $this->assertEquals(31, $mock->clean(31, 1, 2));
     }
 
+    public function testProcessForHardFloor() {
+        $this->robot->process('hard', 3);
+        $this->assertEquals(60, $this->robot->getCapacity());
+    }
+
+    public function testProcessForCarpetFloor() {
+        $this->robot->process('carpet', 3);
+        $this->assertEquals(30, $this->robot->getCapacity());
+    }
+
 }

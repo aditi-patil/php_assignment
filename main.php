@@ -21,18 +21,14 @@ try {
     }
         
     $battery = new Battery();
-    $robot = new Robot($action, $battery);
-    // $val = getopt(null, ["floor:", "area:"]);
-    
-    if ($floor == 'carpet') {
-        $carpet = new Carpet($area, $robot);
-        $carpet->calculateCleanUpArea();
-    } elseif($floor == 'hard') {
-        $hard = new Hard($area, $robot);
-        $hard->calculateCleanUpArea();
+    if ($floor == CARPET || $floor == HARD) {
+        $robot = new Robot($action, $battery);
+        $robot->process($floor, $area);
     } else {
         echo "Invalid value for floor" . PHP_EOL;
     }
+    // $val = getopt(null, ["floor:", "area:"]);
+
 }
 catch(Exception $e) {
     echo "Command is not valid" . PHP_EOL;
