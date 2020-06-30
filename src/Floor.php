@@ -1,29 +1,19 @@
 <?php
 
 class Floor implements Cleanable {
-    private $area;
-    private $interval;
     private $cleanedArea;
+    private $totalArea;
 
-    function __construct($area, $interval){
-        $this->area = $area;
-        $this->interval = $interval;
+    function __construct($area) {
+        $this->totalArea = $area;
     }
 
-    function getInterval(){
-        return $this->interval;
-    }
-
-    function calculateCleanUpArea($area) {
+    function checkCleanedArea($area) {
         $this->cleanedArea = $area;
-        if ($this->cleanedArea < $this->area) {
+        if ($this->cleanedArea < $this->totalArea) {
             return false;
         }
         return true;
-     }
-
-    function getArea() {
-        return $this->area;
     }
 
 }

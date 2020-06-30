@@ -19,11 +19,17 @@ try {
         echo "Invalid action provided." . PHP_EOL;
         exit();
     }
-        
-    $battery = new Battery();
-    if ($floor == CARPET || $floor == HARD) {
-        $robot = new Robot($action, $battery);
-        $robot->process($floor, $area);
+
+    if ($floor == CARPET) {
+        $carpet = new Carpet($area);
+        $robot = new Robot($action, $carpet);
+        echo "Cleaning Carpet Floor area---" . PHP_EOL;
+        $robot->process();
+    } elseif ($floor == HARD) {
+        $hard = new Hard($area);
+        $robot = new Robot($action, $hard);
+        echo "Cleaning Hard Floor area---" . PHP_EOL;
+        $robot->process();
     } else {
         echo "Invalid value for floor" . PHP_EOL;
     }

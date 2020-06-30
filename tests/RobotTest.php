@@ -5,7 +5,8 @@ use PHPUnit\Framework\TestCase;
 class RobotTest extends TestCase {
 
     public function setUp(): void {
-        $this->robot = new Robot('clean', new Battery());
+        $carpet = new Carpet(4);
+        $this->robot = new Robot('clean', $carpet);
         $this->setOutputCallback(function() {});
     }
 
@@ -30,20 +31,14 @@ class RobotTest extends TestCase {
 
         $mock->shouldReceive('clean')
                 ->once()
-                ->withSomeOfArgs(31, 1, 2)
+                ->withSomeOfArgs(31, 1)
                 ->andReturn(31);
 
-        $this->assertEquals(31, $mock->clean(31, 1, 2));
+        $this->assertEquals(31, $mock->clean(31, 1));
     }
 
     public function testProcessForHardFloor() {
-        $this->robot->process('hard', 3);
-        $this->assertEquals(60, $this->robot->getCapacity());
-    }
-
-    public function testProcessForCarpetFloor() {
-        $this->robot->process('carpet', 3);
-        $this->assertEquals(30, $this->robot->getCapacity());
+        $this->assertEquals(NULL, $this->robot->process());
     }
 
 }

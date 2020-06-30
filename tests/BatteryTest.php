@@ -14,7 +14,7 @@ class BatteryTest extends TestCase{
     }
 
     public function testCheckBatteryStatus() {
-        $this->battery->checkBatteryStatus(60);
+        $this->battery->setBatteryStatus(1);
         $this->assertEquals(98.33, $this->battery->getStatus());
 
     }

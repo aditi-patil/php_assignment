@@ -3,48 +3,29 @@
 class Robot {
 
     private $battery;
-    private $capacity;
     private $action;
     private $floor;
 
-    function __construct($action, Battery $b){
+    function __construct($action, $floor){
         $this->action = $action;
-        $this->battery = $b;
+        $this->battery = new Battery();
+        $this->floor = $floor;
     }
 
-    function setCapacity($capacity) {
-        $this->capacity = $capacity;
-    }
-
-    function getCapacity() {
-        return $this->capacity;
-    }
-
-
-    function process($floor, $area){
-        if ($floor == 'hard') {
-            $this->setCapacity(60);
-            $this->floor = new Floor($area, 1);
-            echo "Cleaning Hard floor area---" . PHP_EOL;
-
-        } else {
-            $this->setCapacity(30);
-            $this->floor = new Floor($area, 2);
-            echo "Cleaning Carpet floor area---" . PHP_EOL;
-        }
-        $cleandArea = $this->clean($this->floor->getArea(), 1, $this->floor->getInterval());
-        $cleaningCompleted = $this->floor->calculateCleanUpArea($cleandArea);
-        while ($cleaningCompleted != true) {
-            $cleaningCompleted = $this->floor->calculateCleanUpArea($this->clean($this->floor->getArea(), $cleandArea, $this->floor->getInterval()));
+    function process(){
+        $cleandArea = $this->clean($this->floor->getArea(), 1);
+        $isCleaningCompleted = $this->floor->checkCleanedArea($cleandArea);
+        while ($isCleaningCompleted != true) {
+            $isCleaningCompleted = $this->floor->checkCleanedArea($this->clean($this->floor->getArea(), $cleandArea));
         }
         echo "Cleanining task is completed" . PHP_EOL;
     }
 
-    function clean($endCleanUpAt, $startCleanUpAt,  $interval){
+    function clean($endCleanUpAt, $startCleanUpAt){
         for($i=$startCleanUpAt; $i<=$endCleanUpAt; $i++) {
-            sleep($interval);
-            $this->battery->checkBatteryStatus($this->capacity);
-            echo "[ Cleaned area ---$i meter sq., BatteryStatus----" . $this->battery->getStatus() ."]" . PHP_EOL;
+            sleep($this->floor->getCleaningTime());
+            $this->battery->setBatteryStatus($this->floor->getCleaningTime());
+            echo "[ Cleaned area ---$i meter sq., BatteryStatus----" . $this->battery->getStatus() ."% ]" . PHP_EOL;
             if((int)$this->battery->getStatus() == 0) {
                 echo "Battery is discharged" . PHP_EOL;
                 $this->battery->charge();

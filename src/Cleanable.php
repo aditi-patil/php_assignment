@@ -1,6 +1,6 @@
 <?php
 
 interface Cleanable {
-    function calculateCleanUpArea($area);
+    function checkCleanedArea($area);
 }
 

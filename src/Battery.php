@@ -10,8 +10,8 @@ class Battery {
         $this->status = MAX_LIMIT;
     }
 
-    function checkBatteryStatus($capacity){
-        $this->status = round($this->status - (100 / $capacity), 2);
+    function setBatteryStatus($interval){
+        $this->status = round($this->status - ($interval * (100/60)), 2);
     }
 
     function charge(){
